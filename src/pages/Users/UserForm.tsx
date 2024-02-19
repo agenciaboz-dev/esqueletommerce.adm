@@ -9,6 +9,8 @@ import { FormHeader } from "../../components/FormHeader"
 import { Form } from "../../components/Form"
 import { TextField } from "../../components/TextField"
 import { Button } from "../../components/Button"
+import { DatePicker } from "@mui/x-date-pickers"
+import dayjs from "dayjs"
 
 interface UserFormProps {}
 
@@ -72,14 +74,19 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
                             <TextField label="e-mail" name="email" value={formik.values.email} onChange={formik.handleChange} required fullWidth />
                             <Grid container columns={2} spacing={2}>
                                 <Grid item xs={1}>
-                                    <TextField
+                                    <DatePicker
+                                        value={formik.values.birth ? dayjs(Number(formik.values.birth)).add(3, "hour") : null}
+                                        onChange={(value) => formik.setFieldValue("birth", value?.valueOf().toString() || "")}
+                                        format="DD/MM/YYYY"
+                                    />
+                                    {/* <TextField
                                         label="data de nascimento"
                                         name="birth"
                                         value={formik.values.birth}
                                         onChange={formik.handleChange}
                                         required
                                         fullWidth
-                                    />
+                                    /> */}
                                 </Grid>
                                 <Grid item xs={1}>
                                     <TextField
@@ -109,7 +116,6 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
                                 name="address.street"
                                 value={formik.values.address?.street || ""}
                                 onChange={formik.handleChange}
-                                required
                                 fullWidth
                             />
                             <Grid container columns={3} spacing={2}>
@@ -119,7 +125,6 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
                                         name="address.district"
                                         value={formik.values.address?.district || ""}
                                         onChange={formik.handleChange}
-                                        required
                                         fullWidth
                                     />
                                 </Grid>
@@ -129,7 +134,6 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
                                         name="address.number"
                                         value={formik.values.address?.number || ""}
                                         onChange={formik.handleChange}
-                                        required
                                         fullWidth
                                     />
                                 </Grid>
@@ -141,7 +145,6 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
                                         name="address.city"
                                         value={formik.values.address?.city || ""}
                                         onChange={formik.handleChange}
-                                        required
                                         fullWidth
                                     />
                                 </Grid>
@@ -151,7 +154,6 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
                                         name="address.uf"
                                         value={formik.values.address?.uf || ""}
                                         onChange={formik.handleChange}
-                                        required
                                         fullWidth
                                     />
                                 </Grid>
