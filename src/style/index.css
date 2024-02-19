@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Montserrat;
+    /* user-select: none; */
+}
+
+form {
+    display: contents;
+}
+
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    height: 100%;
+}
+
+body {
+    overflow-x: hidden;
+    height: 100%;
+}
+
+#root {
+    height: 100%;
+}
+
+.MuiPaper-root {
+    display: flex;
+    flex-shrink: 0
+}
+
+.MuiBox-root {
+    display: flex;
+    flex-shrink: 0;
+}
+
+.MuiButton-root, .MuiTab-root {
+    text-transform: none!important;
+}
+
+.MuiChip-label {
+    padding: 0!important;
+}
+
+.files-ui-dropzone-children-container {
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 5vw;
+    gap: 5vw;
+}
+
+img {
+    object-fit: contain;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+::selection {
+    color: white;
+    background: #00AFEF
+}
