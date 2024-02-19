@@ -18,6 +18,7 @@ export const UsersEvents: React.FC<UsersEventsProps> = ({ setLoading }) => {
 
     useEffect(() => {
         io.on("user:delete:success", (deleted: User) => {
+            snackbar({ severity: "warning", text: "usuário deletado" })
             user.remove(deleted)
             navigate("/users")
         })
@@ -44,6 +45,7 @@ export const UsersEvents: React.FC<UsersEventsProps> = ({ setLoading }) => {
         })
 
         io.on("user:signup:success", (new_User: User) => {
+            snackbar({ severity: "success", text: "usuário cadastrado" })
             setLoading(false)
             user.update(new_User)
             navigate("/users")
