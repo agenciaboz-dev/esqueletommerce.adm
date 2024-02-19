@@ -1,4 +1,4 @@
-import { User } from "@prisma/client"
+import { User } from "../class/User"
 
 export declare interface SignupForm extends User {
     id?: number
