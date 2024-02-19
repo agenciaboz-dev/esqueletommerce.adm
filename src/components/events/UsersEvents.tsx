@@ -33,7 +33,10 @@ export const UsersEvents: React.FC<UsersEventsProps> = ({ setLoading }) => {
     }, [user.list])
 
     useEffect(() => {
-        io.on("user:update:success", () => setLoading(false))
+        io.on("user:update:success", () => {
+            setLoading(false)
+            snackbar({ severity: "info", text: "usuário atualizado" })
+        })
 
         io.on("user:update:error", (error) => {
             setLoading(false)
