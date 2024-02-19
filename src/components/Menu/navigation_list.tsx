@@ -1,4 +1,4 @@
-import { Home } from "@mui/icons-material"
+import { Home, People } from "@mui/icons-material"
 import { NavigationItem } from "../../types/NavigationItem"
 
 export const navigation_list: NavigationItem[] = [
@@ -25,7 +25,7 @@ export const navigation_list: NavigationItem[] = [
     {
         path: "/users",
         label: "Usuários",
-        icon: <Home />,
+        icon: <People />,
     },
     {
         path: "/orders",
