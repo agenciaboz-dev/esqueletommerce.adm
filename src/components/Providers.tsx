@@ -5,6 +5,7 @@ import { BrowserRouter } from "react-router-dom"
 import { useMuiTheme } from "../hooks/useMuiTheme"
 import { ThemeProvider } from "@mui/material"
 import { IoProvider } from "../contexts/ioContext"
+import { UserProvider } from "../contexts/userContext"
 
 interface ProvidersProps {
     children?: React.ReactNode
@@ -18,7 +19,9 @@ export const Providers: React.FC<ProvidersProps> = ({ children }) => {
             <ThemeProvider theme={theme}>
                 <SnackbarProvider>
                     <ConfirmDialogProvider>
-                        <IoProvider>{children}</IoProvider>
+                        <IoProvider>
+                            <UserProvider>{children}</UserProvider>
+                        </IoProvider>
                     </ConfirmDialogProvider>
                 </SnackbarProvider>
             </ThemeProvider>
