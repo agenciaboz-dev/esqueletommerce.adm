@@ -1,7 +1,7 @@
-import { createContext, useState } from "react"
+import { createContext, useEffect, useState } from "react"
 import React from "react"
 import { User } from "../types/server/class/User"
-import { UsersEvents } from "../components/events/UsersEvents"
+import { useIo } from "../hooks/useIo"
 
 interface UserContextValue {
     user: User | null
@@ -22,15 +22,46 @@ const UserContext = createContext<UserContextValue>({} as UserContextValue)
 export default UserContext
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
+    const io = useIo()
+
     const [user, setUser] = useState<User | null>(null)
     const [list, setList] = useState<User[]>([])
 
     const update = (user: User) => setList((list) => [...list.filter((item) => item.id != user.id), user])
 
-    return (
-        <UserContext.Provider value={{ user, setUser, list, setList, update }}>
-            <UsersEvents />
-            {children}
-        </UserContext.Provider>
-    )
+    useEffect(() => {
+        io.on("user:update", (updated_user: User) => {
+            update(updated_user)
+        })
+
+        io.on("user:signup", (updated_user: User) => {
+            update(updated_user)
+        })
+
+        return () => {
+            io.off("user:update")
+            io.off("user:signup")
+        }
+    }, [list])
+
+    useEffect(() => {
+        io.emit("user:list")
+
+        io.on("user:list", (users: User[]) => {
+            setList(users)
+        })
+
+        io.on("user:update", (updated_user: User) => {
+            if (updated_user.id == user?.id) {
+                setUser(updated_user)
+            }
+        })
+
+        return () => {
+            io.off("user:list")
+            io.off("user:update")
+        }
+    }, [])
+
+    return <UserContext.Provider value={{ user, setUser, list, setList, update }}>{children}</UserContext.Provider>
 }

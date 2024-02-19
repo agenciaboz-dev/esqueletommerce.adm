@@ -1,9 +1,9 @@
-import React from "react"
-import { Box, Grid } from "@mui/material"
+import React, { useState } from "react"
+import { Box, CircularProgress, Grid } from "@mui/material"
 import { useFormik } from "formik"
 import { SignupForm } from "../../types/server/user/signup"
 import { default_content_wrapper_style } from "../../style/default_content_style"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useUser } from "../../hooks/useUser"
 import { FormHeader } from "../../components/FormHeader"
 import { Form } from "../../components/Form"
@@ -11,13 +11,19 @@ import { TextField } from "../../components/TextField"
 import { Button } from "../../components/Button"
 import { DatePicker } from "@mui/x-date-pickers"
 import dayjs from "dayjs"
+import { useIo } from "../../hooks/useIo"
+import { UsersEvents } from "../../components/events/UsersEvents"
 
 interface UserFormProps {}
 
 export const UserForm: React.FC<UserFormProps> = ({}) => {
+    const io = useIo()
+    const navigate = useNavigate()
     const user = useUser()
     const current_id = Number(useParams().id)
     const current_user = user.list.find((user) => user.id == current_id)
+
+    const [loading, setLoading] = useState(false)
 
     const formik = useFormik<SignupForm>({
         initialValues: current_user
@@ -31,9 +37,9 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
                   pronoun: "",
                   password: "",
                   admin: false,
-                  image: "",
-                  google_id: "",
-                  google_token: "",
+                  image: null,
+                  google_id: null,
+                  google_token: null,
                   address: {
                       street: "",
                       district: "",
@@ -43,7 +49,10 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
                   },
               },
         onSubmit: (values) => {
+            if (loading) return
+            setLoading(true)
             console.log(values)
+            io.emit(current_user ? "user:update" : "user:signup", values)
         },
     })
 
@@ -164,10 +173,12 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
 
                 <Box sx={{ alignSelf: "flex-end" }}>
                     <Button variant="contained" type="submit">
-                        {current_user ? "salvar" : "criar"}
+                        {loading ? <CircularProgress size="1.5rem" color="inherit" /> : current_user ? "salvar" : "criar"}
                     </Button>
                 </Box>
             </Form>
+
+            <UsersEvents setLoading={setLoading} onSignup={() => navigate("/users")} />
         </Box>
     )
 }
