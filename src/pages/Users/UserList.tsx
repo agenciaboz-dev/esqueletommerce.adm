@@ -11,9 +11,11 @@ interface UserListProps {
 export const UserList: React.FC<UserListProps> = ({ list }) => {
     return (
         <Paper elevation={4} sx={default_content_list_style}>
-            {list.map((user) => (
-                <UserComponent user={user} key={user.id} />
-            ))}
+            {list
+                .sort((a, b) => a.id - b.id)
+                .map((user) => (
+                    <UserComponent user={user} key={user.id} />
+                ))}
         </Paper>
     )
 }
