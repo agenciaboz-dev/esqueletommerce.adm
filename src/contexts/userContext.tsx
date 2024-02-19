@@ -11,6 +11,7 @@ interface UserContextValue {
     setList: React.Dispatch<React.SetStateAction<User[]>>
 
     update: (user: User) => void
+    remove: (user: User) => void
 }
 
 interface UserProviderProps {
@@ -28,6 +29,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     const [list, setList] = useState<User[]>([])
 
     const update = (user: User) => setList((list) => [...list.filter((item) => item.id != user.id), user])
+    const remove = (user: User) => setList((list) => list.filter((item) => item.id != user.id))
 
     useEffect(() => {
         io.on("user:update", (updated_user: User) => {
@@ -38,9 +40,14 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
             update(updated_user)
         })
 
+        io.on("user:delete", (updated_user: User) => {
+            remove(updated_user)
+        })
+
         return () => {
             io.off("user:update")
             io.off("user:signup")
+            io.off("user:delete")
         }
     }, [list])
 
@@ -63,5 +70,5 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         }
     }, [])
 
-    return <UserContext.Provider value={{ user, setUser, list, setList, update }}>{children}</UserContext.Provider>
+    return <UserContext.Provider value={{ user, setUser, list, setList, update, remove }}>{children}</UserContext.Provider>
 }

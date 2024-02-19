@@ -13,6 +13,7 @@ import { DatePicker } from "@mui/x-date-pickers"
 import dayjs from "dayjs"
 import { useIo } from "../../hooks/useIo"
 import { UsersEvents } from "../../components/events/UsersEvents"
+import { useConfirmDialog } from "burgos-confirm"
 
 interface UserFormProps {}
 
@@ -23,7 +24,10 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
     const current_id = Number(useParams().id)
     const current_user = user.list.find((user) => user.id == current_id)
 
+    const { confirm } = useConfirmDialog()
+
     const [loading, setLoading] = useState(false)
+    const [deleting, setDeleting] = useState(false)
 
     const formik = useFormik<SignupForm>({
         initialValues: current_user
@@ -55,6 +59,17 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
             io.emit(current_user ? "user:update" : "user:signup", values)
         },
     })
+
+    const onDelete = () => {
+        if (!current_user) return
+        confirm({
+            title: "deletar usuário",
+            content: "tem certeza?",
+            onConfirm: () => {
+                io.emit("user:delete", { id: current_user.id })
+            },
+        })
+    }
 
     return (
         <Box sx={default_content_wrapper_style}>
@@ -171,14 +186,19 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
                     </Grid>
                 </Grid>
 
-                <Box sx={{ alignSelf: "flex-end" }}>
+                <Box sx={{ alignSelf: "flex-end", gap: 1 }}>
+                    {current_user && (
+                        <Button variant="outlined" color="error" onClick={onDelete}>
+                            {deleting ? <CircularProgress size="1.5rem" color="inherit" /> : "deletar"}
+                        </Button>
+                    )}
                     <Button variant="contained" type="submit">
                         {loading ? <CircularProgress size="1.5rem" color="inherit" /> : current_user ? "salvar" : "criar"}
                     </Button>
                 </Box>
             </Form>
 
-            <UsersEvents setLoading={setLoading} onSignup={() => navigate("/users")} />
+            <UsersEvents setLoading={setLoading} />
         </Box>
     )
 }
