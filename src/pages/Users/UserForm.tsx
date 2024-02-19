@@ -3,7 +3,7 @@ import { Box, CircularProgress, Grid, MenuItem } from "@mui/material"
 import { useFormik } from "formik"
 import { SignupForm } from "../../types/server/user/signup"
 import { default_content_wrapper_style } from "../../style/default_content_style"
-import { useNavigate, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { useUser } from "../../hooks/useUser"
 import { FormHeader } from "../../components/FormHeader"
 import { Form } from "../../components/Form"
@@ -16,15 +16,19 @@ import { UsersEvents } from "../../components/events/UsersEvents"
 import { useConfirmDialog } from "burgos-confirm"
 import { estados } from "../../tools/estadosBrasil"
 import { pronouns } from "../../tools/pronouns"
+import { useCpfMask, usePhoneMask } from "burgos-masks"
+import MaskedInput from "../../components/MaskedInput"
+import { unmask } from "../../tools/unmask"
 
 interface UserFormProps {}
 
 export const UserForm: React.FC<UserFormProps> = ({}) => {
     const io = useIo()
-    const navigate = useNavigate()
     const user = useUser()
     const current_id = Number(useParams().id)
     const current_user = user.list.find((user) => user.id == current_id)
+    const cpf_mask = useCpfMask()
+    const phone_mask = usePhoneMask()
 
     const { confirm } = useConfirmDialog()
 
@@ -58,7 +62,8 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
             if (loading) return
             setLoading(true)
             console.log(values)
-            io.emit(current_user ? "user:update" : "user:signup", values)
+            const data: SignupForm = { ...values, cpf: unmask(values.cpf), phone: unmask(values.phone) }
+            io.emit(current_user ? "user:update" : "user:signup", data)
         },
     })
 
@@ -68,6 +73,7 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
             title: "deletar usuário",
             content: "tem certeza?",
             onConfirm: () => {
+                setDeleting(true)
                 io.emit("user:delete", { id: current_user.id })
             },
         })
@@ -84,7 +90,15 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
                             <TextField label="nome" name="name" value={formik.values.name} onChange={formik.handleChange} required fullWidth />
                             <Grid container columns={2} spacing={2}>
                                 <Grid item xs={1}>
-                                    <TextField label="cpf" name="cpf" value={formik.values.cpf} onChange={formik.handleChange} required fullWidth />
+                                    <TextField
+                                        label="cpf"
+                                        name="cpf"
+                                        value={formik.values.cpf}
+                                        onChange={formik.handleChange}
+                                        required
+                                        fullWidth
+                                        InputProps={{ inputComponent: MaskedInput, inputProps: { mask: cpf_mask, inputMode: "numeric" } }}
+                                    />
                                 </Grid>
                                 <Grid item xs={1}>
                                     <TextField
@@ -94,6 +108,7 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
                                         onChange={formik.handleChange}
                                         required
                                         fullWidth
+                                        InputProps={{ inputComponent: MaskedInput, inputProps: { mask: phone_mask, inputMode: "numeric" } }}
                                     />
                                 </Grid>
                             </Grid>
