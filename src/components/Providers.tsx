@@ -6,6 +6,8 @@ import { useMuiTheme } from "../hooks/useMuiTheme"
 import { ThemeProvider } from "@mui/material"
 import { IoProvider } from "../contexts/ioContext"
 import { UserProvider } from "../contexts/userContext"
+import { LocalizationProvider } from "@mui/x-date-pickers"
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
 
 interface ProvidersProps {
     children?: React.ReactNode
@@ -19,9 +21,11 @@ export const Providers: React.FC<ProvidersProps> = ({ children }) => {
             <ThemeProvider theme={theme}>
                 <SnackbarProvider>
                     <ConfirmDialogProvider>
-                        <IoProvider>
-                            <UserProvider>{children}</UserProvider>
-                        </IoProvider>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <IoProvider>
+                                <UserProvider>{children}</UserProvider>
+                            </IoProvider>
+                        </LocalizationProvider>
                     </ConfirmDialogProvider>
                 </SnackbarProvider>
             </ThemeProvider>

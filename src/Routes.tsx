@@ -5,6 +5,7 @@ import { useUser } from "./hooks/useUser"
 import { Dashboard } from "./pages/Dashboard/Dashboard"
 import { Menu } from "./components/Menu/Menu"
 import { Box } from "@mui/material"
+import { Users } from "./pages/Users/Users"
 
 interface RoutesProps {}
 
@@ -16,6 +17,7 @@ export const Routes: React.FC<RoutesProps> = ({}) => {
             <Menu />
             <ReactRoutes>
                 <Route index element={<Dashboard />} />
+                <Route path="/users/*" element={<Users />} />
             </ReactRoutes>
         </Box>
     ) : (

@@ -3,12 +3,12 @@ import { user as include } from "../prisma/include";
 import { Socket } from "socket.io";
 import { SignupForm } from "../types/shared/user/signup";
 import { LoginForm } from "../types/shared/user/login";
+import { Address } from "./Address";
 export type UserPrisma = Prisma.UserGetPayload<{
     include: typeof include;
 }>;
 export declare class User {
     id: number;
-    username: string;
     email: string;
     password: string;
     name: string;
@@ -16,11 +16,11 @@ export declare class User {
     birth: string;
     phone: string;
     pronoun: string;
-    uf: string;
     admin: boolean;
     image: string | null;
     google_id: string | null;
     google_token: string | null;
+    address?: Address;
     constructor(id: number);
     init(): Promise<void>;
     static update(data: Partial<UserPrisma> & {
