@@ -10,7 +10,7 @@ interface LogoProps {
 export const Logo:React.FC<LogoProps> = ({ size }) => {
     
     return (
-        <Avatar src={url} sx={{width: size, height: size}}>
+        <Avatar src={url} sx={{ width: size, height: size }} variant="square">
             <BrokenImage />
         </Avatar>
     )
