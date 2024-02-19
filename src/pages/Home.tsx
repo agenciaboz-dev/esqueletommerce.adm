@@ -41,7 +41,7 @@ export const Home: React.FC<HomeProps> = ({}) => {
             <Box sx={{ width: 0.35, flexDirection: "column", padding: 10, paddingTop: 5, alignItems: "center", gap: 5 }}>
                 <Logo size="20vw" />
                 <Form onSubmit={formik.handleSubmit} sx={{ flexDirection: "column", gap: 3, width: 1 }}>
-                    <TextField label="e-mail, cpf ou usuário" name="login" value={formik.values.login} onChange={formik.handleChange} required />
+                    <TextField label="e-mail ou cpf" name="login" value={formik.values.login} onChange={formik.handleChange} required />
                     <TextField
                         label="senha"
                         name="password"
