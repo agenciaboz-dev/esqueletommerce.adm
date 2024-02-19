@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Box, CircularProgress, Grid } from "@mui/material"
+import { Box, CircularProgress, Grid, MenuItem } from "@mui/material"
 import { useFormik } from "formik"
 import { SignupForm } from "../../types/server/user/signup"
 import { default_content_wrapper_style } from "../../style/default_content_style"
@@ -14,6 +14,8 @@ import dayjs from "dayjs"
 import { useIo } from "../../hooks/useIo"
 import { UsersEvents } from "../../components/events/UsersEvents"
 import { useConfirmDialog } from "burgos-confirm"
+import { estados } from "../../tools/estadosBrasil"
+import { pronouns } from "../../tools/pronouns"
 
 interface UserFormProps {}
 
@@ -103,14 +105,6 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
                                         onChange={(value) => formik.setFieldValue("birth", value?.valueOf().toString() || "")}
                                         format="DD/MM/YYYY"
                                     />
-                                    {/* <TextField
-                                        label="data de nascimento"
-                                        name="birth"
-                                        value={formik.values.birth}
-                                        onChange={formik.handleChange}
-                                        required
-                                        fullWidth
-                                    /> */}
                                 </Grid>
                                 <Grid item xs={1}>
                                     <TextField
@@ -120,7 +114,16 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
                                         onChange={formik.handleChange}
                                         required
                                         fullWidth
-                                    />
+                                        select
+                                        SelectProps={{ MenuProps: { MenuListProps: { sx: { width: 1 } } } }}
+                                    >
+                                        <MenuItem value="" sx={{ display: "none" }} disabled></MenuItem>
+                                        {pronouns.map((pronoun) => (
+                                            <MenuItem key={pronoun} value={pronoun}>
+                                                {pronoun}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
                                 </Grid>
                             </Grid>
                             <TextField
@@ -179,7 +182,15 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
                                         value={formik.values.address?.uf || ""}
                                         onChange={formik.handleChange}
                                         fullWidth
-                                    />
+                                        select
+                                    >
+                                        <MenuItem value="" sx={{ display: "none" }} disabled></MenuItem>
+                                        {estados.map((estado) => (
+                                            <MenuItem key={estado.value} value={estado.value}>
+                                                {estado.label}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
                                 </Grid>
                             </Grid>
                         </Box>
