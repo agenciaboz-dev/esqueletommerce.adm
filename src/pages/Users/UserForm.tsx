@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { Box, CircularProgress, Grid, MenuItem, Paper } from "@mui/material"
 import { useFormik } from "formik"
 import { SignupForm } from "../../types/server/user/signup"
@@ -16,9 +16,10 @@ import { UsersEvents } from "../../components/events/UsersEvents"
 import { useConfirmDialog } from "burgos-confirm"
 import { estados } from "../../tools/estadosBrasil"
 import { pronouns } from "../../tools/pronouns"
-import { useCpfMask, usePhoneMask } from "burgos-masks"
+import { useCepMask, useCpfMask, usePhoneMask } from "burgos-masks"
 import MaskedInput from "../../components/MaskedInput"
 import { unmask } from "../../tools/unmask"
+import { CepEvents } from "../../components/events/CepEvents"
 
 interface UserFormProps {}
 
@@ -29,11 +30,14 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
     const current_user = user.list.find((user) => user.id == current_id)
     const cpf_mask = useCpfMask()
     const phone_mask = usePhoneMask()
+    const cep_mask = useCepMask()
+    const number_ref = useRef<HTMLInputElement>(null)
 
     const { confirm } = useConfirmDialog()
 
     const [loading, setLoading] = useState(false)
     const [deleting, setDeleting] = useState(false)
+    const [loadingCep, setLoadingCep] = useState(false)
 
     const formik = useFormik<SignupForm>({
         initialValues: current_user
@@ -51,6 +55,7 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
                   google_id: null,
                   google_token: null,
                   address: {
+                      cep: "",
                       street: "",
                       district: "",
                       number: "",
@@ -62,7 +67,12 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
             if (loading) return
             setLoading(true)
             console.log(values)
-            const data: SignupForm = { ...values, cpf: unmask(values.cpf), phone: unmask(values.phone) }
+            const data: SignupForm = {
+                ...values,
+                cpf: unmask(values.cpf),
+                phone: unmask(values.phone),
+                address: values.address ? { ...values.address, cep: unmask(values.address.cep) } : undefined,
+            }
             io.emit(current_user ? "user:update" : "user:signup", data)
         },
         enableReinitialize: true,
@@ -79,6 +89,22 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
             },
         })
     }
+
+    useEffect(() => {
+        if (formik.values.address) {
+            const cep = formik.values.address.cep
+            if (cep.length == 10) {
+                setLoadingCep(true)
+                io.emit("cep:search", { cep })
+            }
+        }
+    }, [formik.values.address?.cep])
+
+    useEffect(() => {
+        if (formik.values.address?.cep.length == 10 && !loadingCep && formik.values.address?.street) {
+            number_ref.current?.focus()
+        }
+    }, [loadingCep, formik.values.address?.cep, formik.values.address?.street])
 
     return (
         <Paper sx={{ ...default_content_list_style, gap: 3, padding: 3 }}>
@@ -143,12 +169,22 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
                     <TextField label="senha" name="password" value={formik.values.password} onChange={formik.handleChange} required fullWidth />
                 </Box>
                 <Box sx={{ gap: 2, flexDirection: "column" }}>
+                    Endereço
                     <TextField
-                        label="endereço"
+                        label="CEP"
+                        name="address.cep"
+                        value={formik.values.address?.cep || ""}
+                        onChange={formik.handleChange}
+                        fullWidth
+                        InputProps={{ inputComponent: MaskedInput, inputProps: { mask: cep_mask, inputMode: "numeric" } }}
+                    />
+                    <TextField
+                        label="rua"
                         name="address.street"
                         value={formik.values.address?.street || ""}
                         onChange={formik.handleChange}
                         fullWidth
+                        loading={loadingCep}
                     />
                     <Grid container columns={3} spacing={2}>
                         <Grid item xs={2}>
@@ -158,15 +194,18 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
                                 value={formik.values.address?.district || ""}
                                 onChange={formik.handleChange}
                                 fullWidth
+                                loading={loadingCep}
                             />
                         </Grid>
                         <Grid item xs={1}>
                             <TextField
+                                inputRef={number_ref}
                                 label="número"
                                 name="address.number"
                                 value={formik.values.address?.number || ""}
                                 onChange={formik.handleChange}
                                 fullWidth
+                                loading={loadingCep}
                             />
                         </Grid>
                     </Grid>
@@ -178,6 +217,7 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
                                 value={formik.values.address?.city || ""}
                                 onChange={formik.handleChange}
                                 fullWidth
+                                loading={loadingCep}
                             />
                         </Grid>
                         <Grid item xs={1}>
@@ -187,6 +227,7 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
                                 value={formik.values.address?.uf || ""}
                                 onChange={formik.handleChange}
                                 fullWidth
+                                loading={loadingCep}
                                 select
                             >
                                 <MenuItem value="" sx={{ display: "none" }} disabled></MenuItem>
@@ -213,6 +254,7 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
             </Form>
 
             <UsersEvents setLoading={setLoading} />
+            <CepEvents setLoading={setLoadingCep} formik={formik} />
         </Paper>
     )
 }
