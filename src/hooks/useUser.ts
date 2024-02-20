@@ -4,5 +4,9 @@ import UserContext from "../contexts/userContext"
 export const useUser = () => {
     const userContext = useContext(UserContext)
 
-    return { ...userContext }
+    const logout = () => {
+        userContext.setUser(null)
+    }
+
+    return { ...userContext, logout }
 }
