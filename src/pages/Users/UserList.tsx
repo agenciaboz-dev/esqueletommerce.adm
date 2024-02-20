@@ -10,7 +10,7 @@ interface UserListProps {
 
 export const UserList: React.FC<UserListProps> = ({ list }) => {
     return (
-        <Paper elevation={4} sx={default_content_list_style}>
+        <Paper elevation={0} sx={default_content_list_style}>
             {list
                 .sort((a, b) => a.id - b.id)
                 .map((user) => (

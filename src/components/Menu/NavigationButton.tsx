@@ -30,7 +30,9 @@ export const NavigationButton: React.FC<NavigationButtonProps> = ({ menu }) => {
         >
             <Icon />
             {menu.label}
-            {menu.submenus && <KeyboardArrowDown sx={{ marginLeft: "auto", rotate: collapse ? "-180deg" : "", transition: "0.3s" }} />}
+            {menu.submenus && (
+                <KeyboardArrowDown sx={{ marginLeft: "auto", rotate: collapse ? "-180deg" : "", transition: "0.3s" }} />
+            )}
         </MenuItem>
     )
 }

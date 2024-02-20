@@ -10,48 +10,47 @@ const colors = {
 
     background: {
         default: "#fff",
-        paper: "#fff"
+        paper: "#fff",
     },
 
     text: {
-        primary: "#111012",
-        // secondary: "#1F1F1F",
-        secondary: "#585858",
-    }
+        primary: "#fff",
+        secondary: "#1F1F1F",
+        terciary: "#585858",
+    },
 }
-
 
 export const useMuiTheme = () => {
     const THEME = createTheme({
         typography: {
-            fontFamily: ["Montserrat", "Futura Medium BT"].join(",")
+            fontFamily: ["Montserrat", "Futura Medium BT"].join(","),
         },
         palette: {
             primary: {
-                main: colors.primary
+                main: colors.primary,
             },
             secondary: {
-                main: colors.secondary
+                main: colors.secondary,
             },
 
             background: {
                 default: colors.background.default,
-                paper: colors.background.paper
+                paper: colors.background.paper,
             },
 
             text: {
                 primary: colors.text.primary,
-                secondary: colors.text.secondary
+                secondary: colors.text.secondary,
             },
 
             success: {
-                main: colors.success
+                main: colors.success,
             },
 
             warning: {
-                main: colors.warning
-            }
-        }
+                main: colors.warning,
+            },
+        },
     })
 
     return THEME

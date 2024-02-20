@@ -8,7 +8,17 @@ interface MenuProps {}
 
 export const Menu: React.FC<MenuProps> = ({}) => {
     return (
-        <Box sx={{ width: 0.2, height: 1, bgcolor: "primary.main", alignItems: "center", flexDirection: "column", gap: 5, paddingTop: 5 }}>
+        <Box
+            sx={{
+                width: 0.2,
+                height: 1,
+                bgcolor: "primary.main",
+                alignItems: "center",
+                flexDirection: "column",
+                gap: 5,
+                paddingTop: 5,
+            }}
+        >
             <Logo size="13vw" variant="circular" sx={{ bgcolor: "background.default" }} />
 
             <Box sx={{ flexDirection: "column", width: 1 }}>

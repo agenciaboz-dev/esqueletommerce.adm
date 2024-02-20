@@ -16,12 +16,13 @@ export const SearchField: React.FC<SearchFieldProps> = ({ original_list, setList
     }
 
     return (
-        <TextField
-            fullWidth
-            label="Buscar"
-            placeholder="Digite para filtrar"
-            InputProps={{ startAdornment: <Search />, sx: { gap: 1 } }}
-            onChange={(event) => handleSearch(event.target.value)}
-        />
+        
+            <TextField
+                fullWidth
+                label="Buscar"
+                placeholder="Digite para filtrar"
+                InputProps={{ startAdornment: <Search />, sx: { gap: 1 } }}
+                onChange={(event) => handleSearch(event.target.value)}
+            />
     )
 }
