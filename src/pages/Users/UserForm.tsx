@@ -127,7 +127,7 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
         <Paper sx={{ ...default_content_list_style, gap: 3, padding: 3 }} ref={container_ref}>
             {/* <FormHeader title={current_user ? "editar usuário" : "novo usuário"} /> */}
 
-            <Form onSubmit={formik.handleSubmit} sx={{ flexDirection: "column", gap: 2 }}>
+            <Form onSubmit={formik.handleSubmit} sx={{ flexDirection: "column", gap: 2, paddingBottom: 6 }}>
                 <Box sx={{ gap: 2, flexDirection: "column" }}>
                     <Avatar
                         src={
@@ -270,7 +270,7 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
                     </Grid>
                 </Box>
 
-                <Box sx={{ alignSelf: "flex-end", gap: 1 }}>
+                <Box sx={{ alignSelf: "flex-end", gap: 1, position: "fixed", bottom: "1vw" }}>
                     {current_user && (
                         <Button variant="outlined" color="error" onClick={onDelete}>
                             {deleting ? <CircularProgress size="1.5rem" color="inherit" /> : "deletar"}
