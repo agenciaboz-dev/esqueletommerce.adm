@@ -104,6 +104,7 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
         setImage(undefined)
         console.log(current_user)
         setDeleting(false)
+        setLoading(false)
     }, [current_user])
 
     useEffect(() => {
