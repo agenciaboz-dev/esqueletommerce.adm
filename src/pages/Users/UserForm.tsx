@@ -31,6 +31,7 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
     const cpf_mask = useCpfMask()
     const phone_mask = usePhoneMask()
     const cep_mask = useCepMask()
+    const container_ref = useRef<HTMLDivElement>(null)
     const number_ref = useRef<HTMLInputElement>(null)
 
     const { confirm } = useConfirmDialog()
@@ -91,6 +92,10 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
     }
 
     useEffect(() => {
+        container_ref.current?.scrollTo({ top: 0, behavior: "smooth" })
+    }, [current_user])
+
+    useEffect(() => {
         if (formik.values.address) {
             const cep = formik.values.address.cep
             if (cep.length == 10) {
@@ -107,7 +112,7 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
     }, [loadingCep, formik.values.address?.cep, formik.values.address?.street])
 
     return (
-        <Paper sx={{ ...default_content_list_style, gap: 3, padding: 3 }}>
+        <Paper sx={{ ...default_content_list_style, gap: 3, padding: 3 }} ref={container_ref}>
             <FormHeader title={current_user ? "editar usuário" : "novo usuário"} />
 
             <Form onSubmit={formik.handleSubmit} sx={{ flexDirection: "column", gap: 2 }}>
