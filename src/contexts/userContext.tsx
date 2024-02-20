@@ -34,6 +34,10 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     useEffect(() => {
         io.on("user:update", (updated_user: User) => {
             update(updated_user)
+
+            if (updated_user.id == user?.id) {
+                setUser(updated_user)
+            }
         })
 
         io.on("user:signup", (updated_user: User) => {
@@ -49,7 +53,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
             io.off("user:signup")
             io.off("user:delete")
         }
-    }, [list])
+    }, [list, user])
 
     useEffect(() => {
         io.emit("user:list")
@@ -58,15 +62,8 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
             setList(users)
         })
 
-        io.on("user:update", (updated_user: User) => {
-            if (updated_user.id == user?.id) {
-                setUser(updated_user)
-            }
-        })
-
         return () => {
             io.off("user:list")
-            io.off("user:update")
         }
     }, [])
 
