@@ -21,18 +21,16 @@ export const Users: React.FC<UsersProps> = ({}) => {
     }, [user.list])
 
     return (
-        <Routes>
-            <Route
-                index
-                element={
-                    <Box sx={default_content_wrapper_style}>
-                        <ListHeader original_list={user.list} setList={setUserList} add_path="/users/new" title="Usuários" Icon={TbUsers} />
-                        <UserList list={userList} />
-                    </Box>
-                }
-            />
-            <Route path="/new" element={<UserForm />} />
-            <Route path="/:id" element={<UserForm />} />
-        </Routes>
+        <Box sx={default_content_wrapper_style}>
+            <ListHeader original_list={user.list} setList={setUserList} add_path="/users/new" title="Usuários" Icon={TbUsers} />
+            <Box sx={{ gap: 3, height: 0.85 }}>
+                <UserList list={userList} />
+                <Routes>
+                    <Route index element={<UserForm />} />
+                    <Route path="/new" element={<UserForm />} />
+                    <Route path="/:id" element={<UserForm />} />
+                </Routes>
+            </Box>
+        </Box>
     )
 }

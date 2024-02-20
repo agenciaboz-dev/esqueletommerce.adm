@@ -4,9 +4,9 @@ export const default_content_wrapper_style: SxProps = {
     flexDirection: "column",
     width: 0.8,
     padding: 3,
-    gap: 1,
+    gap: 3,
     overflow: "hidden",
-    // bgcolor: "primary.main",
+    height: 1,
 }
 
 export const default_content_list_style: SxProps = {
@@ -15,6 +15,6 @@ export const default_content_list_style: SxProps = {
     boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
     paddingTop: 1.5,
     height: 1,
-    width: 0.4,
+    flex: 1,
     overflowY: "auto",
 }
