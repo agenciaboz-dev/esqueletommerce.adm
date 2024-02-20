@@ -14,17 +14,16 @@ export const UserComponent: React.FC<UserComponentProps> = ({ user }) => {
     const navigate = useNavigate()
 
     return (
-        <MenuItem
-            sx={{ alignItems: "center", padding: 2, justifyContent: "space-between" }}
-            onClick={() => navigate(`/users/${user.id}`)}
-        >
+        <MenuItem sx={{ alignItems: "center", padding: 2, justifyContent: "space-between" }} onClick={() => navigate(`/users/${user.id}`)}>
             <Box sx={{ alignItems: "center", gap: 2 }}>
                 <Avatar src={user.image || ""} sx={{ width: 50, height: 50 }}>
                     <Person sx={{ width: 35, height: "auto" }} />
                 </Avatar>
                 <Box sx={{ color: "text.secondary" }}>{user.name}</Box>
             </Box>
-            <Button sx={button_style}>Acessar</Button>
+            <Button variant="contained" sx={button_style}>
+                Acessar
+            </Button>
         </MenuItem>
     )
 }
