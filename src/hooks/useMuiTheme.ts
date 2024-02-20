@@ -14,7 +14,7 @@ const colors = {
     },
 
     text: {
-        primary: "#fff",
+        primary: "#1F1F1F",
         secondary: "#1F1F1F",
         terciary: "#585858",
     },
