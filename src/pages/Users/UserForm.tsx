@@ -20,6 +20,7 @@ import { useCepMask, useCpfMask, usePhoneMask } from "burgos-masks"
 import MaskedInput from "../../components/MaskedInput"
 import { unmask } from "../../tools/unmask"
 import { CepEvents } from "../../components/events/CepEvents"
+import { Avatar, ExtFile } from "@files-ui/react"
 
 interface UserFormProps {}
 
@@ -39,6 +40,7 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
     const [loading, setLoading] = useState(false)
     const [deleting, setDeleting] = useState(false)
     const [loadingCep, setLoadingCep] = useState(false)
+    const [image, setImage] = useState<File>()
 
     const formik = useFormik<SignupForm>({
         initialValues: current_user
@@ -73,6 +75,12 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
                 cpf: unmask(values.cpf),
                 phone: unmask(values.phone),
                 address: values.address ? { ...values.address, cep: unmask(values.address.cep) } : undefined,
+                image: image
+                    ? {
+                          file: image,
+                          name: image.name,
+                      }
+                    : undefined,
             }
             io.emit(current_user ? "user:update" : "user:signup", data)
         },
@@ -93,6 +101,9 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
 
     useEffect(() => {
         container_ref.current?.scrollTo({ top: 0, behavior: "smooth" })
+        setImage(undefined)
+        console.log(current_user)
+        setDeleting(false)
     }, [current_user])
 
     useEffect(() => {
@@ -113,10 +124,22 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
 
     return (
         <Paper sx={{ ...default_content_list_style, gap: 3, padding: 3 }} ref={container_ref}>
-            <FormHeader title={current_user ? "editar usuário" : "novo usuário"} />
+            {/* <FormHeader title={current_user ? "editar usuário" : "novo usuário"} /> */}
 
             <Form onSubmit={formik.handleSubmit} sx={{ flexDirection: "column", gap: 2 }}>
                 <Box sx={{ gap: 2, flexDirection: "column" }}>
+                    <Avatar
+                        src={
+                            image ||
+                            current_user?.image ||
+                            "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"
+                        }
+                        onChange={(file) => setImage(file)}
+                        variant="circle"
+                        style={{ width: "10vw", height: "10vw", alignSelf: "center" }}
+                        emptyLabel="enviar imagem"
+                        changeLabel="trocar imagem"
+                    />
                     <TextField label="nome" name="name" value={formik.values.name} onChange={formik.handleChange} required fullWidth />
                     <Grid container columns={2} spacing={2}>
                         <Grid item xs={1}>

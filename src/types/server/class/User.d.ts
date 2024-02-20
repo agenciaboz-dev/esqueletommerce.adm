@@ -4,6 +4,7 @@ import { Socket } from "socket.io";
 import { SignupForm } from "../types/shared/user/signup";
 import { LoginForm } from "../types/shared/user/login";
 import { Address } from "./Address";
+import { ImageUpload } from "../types/shared/ImageUpload";
 export type UserPrisma = Prisma.UserGetPayload<{
     include: typeof include;
 }>;
@@ -32,4 +33,5 @@ export declare class User {
     static delete(socket: Socket, id: number): Promise<void>;
     load(data: UserPrisma): Promise<void>;
     update(data: Partial<UserPrisma>, socket?: Socket): Promise<void>;
+    updateImage(image: ImageUpload): void;
 }

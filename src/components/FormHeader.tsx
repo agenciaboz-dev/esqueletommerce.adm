@@ -13,7 +13,7 @@ export const FormHeader: React.FC<FormHeaderProps> = ({ title, back_path }) => {
     const navigate = useNavigate()
 
     return (
-        <Box sx={{ fontSize: "2rem", gap: 2, alignItems: "center" }}>
+        <Box sx={{ fontSize: "1.5rem", gap: 2, alignItems: "center" }}>
             {back_path && (
                 <Button variant="contained" onClick={() => navigate(back_path)}>
                     <ArrowBack />
