@@ -44,11 +44,11 @@ export const UsersEvents: React.FC<UsersEventsProps> = ({ setLoading }) => {
             snackbar({ severity: "error", text: error })
         })
 
-        io.on("user:signup:success", (new_User: User) => {
+        io.on("user:signup:success", (new_user: User) => {
             snackbar({ severity: "success", text: "usuário cadastrado" })
             setLoading(false)
-            user.update(new_User)
-            navigate("/users")
+            user.update(new_user)
+            navigate(`/users/${new_user.id}`)
         })
 
         io.on("user:signup:error", (error) => {
