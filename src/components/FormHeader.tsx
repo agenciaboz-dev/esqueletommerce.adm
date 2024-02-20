@@ -6,16 +6,19 @@ import { ArrowBack } from "@mui/icons-material"
 
 interface FormHeaderProps {
     title: string
+    back_path?: string
 }
 
-export const FormHeader: React.FC<FormHeaderProps> = ({ title }) => {
+export const FormHeader: React.FC<FormHeaderProps> = ({ title, back_path }) => {
     const navigate = useNavigate()
 
     return (
         <Box sx={{ fontSize: "2rem", gap: 2, alignItems: "center" }}>
-            <Button variant="contained" onClick={() => navigate(-1)}>
-                <ArrowBack />
-            </Button>
+            {back_path && (
+                <Button variant="contained" onClick={() => navigate(back_path)}>
+                    <ArrowBack />
+                </Button>
+            )}
             {title}
         </Box>
     )
