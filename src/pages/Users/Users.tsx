@@ -5,6 +5,7 @@ import { useUser } from "../../hooks/useUser"
 import { User } from "../../types/server/class/User"
 import { default_content_wrapper_style } from "../../style/default_content_style"
 import { UserList } from "./UserList"
+import { TbUsers } from "react-icons/tb"
 import { Route, Routes } from "react-router-dom"
 import { UserForm } from "./UserForm"
 
@@ -25,7 +26,7 @@ export const Users: React.FC<UsersProps> = ({}) => {
                 index
                 element={
                     <Box sx={default_content_wrapper_style}>
-                        <ListHeader original_list={user.list} setList={setUserList} add_path="/users/new" />
+                        <ListHeader original_list={user.list} setList={setUserList} add_path="/users/new" title="Usuários" Icon={TbUsers} />
                         <UserList list={userList} />
                     </Box>
                 }
