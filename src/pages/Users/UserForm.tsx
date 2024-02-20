@@ -46,7 +46,7 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
                   birth: "",
                   pronoun: "",
                   password: "",
-                  admin: false,
+                  admin: true,
                   image: null,
                   google_id: null,
                   google_token: null,

@@ -12,6 +12,7 @@ export const UserList: React.FC<UserListProps> = ({ list }) => {
     return (
         <Paper elevation={0} sx={default_content_list_style}>
             {list
+                .filter((user) => user.admin)
                 .sort((a, b) => a.id - b.id)
                 .map((user) => (
                     <UserComponent user={user} key={user.id} />
