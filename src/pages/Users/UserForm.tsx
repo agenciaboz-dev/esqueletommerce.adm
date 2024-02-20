@@ -173,6 +173,7 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
                                 value={formik.values.birth ? dayjs(Number(formik.values.birth)).add(3, "hour") : null}
                                 onChange={(value) => formik.setFieldValue("birth", value?.valueOf().toString() || "")}
                                 format="DD/MM/YYYY"
+                                sx={{ width: 1 }}
                             />
                         </Grid>
                         <Grid item xs={1}>
