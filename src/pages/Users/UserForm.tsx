@@ -2,10 +2,9 @@ import React, { useEffect, useRef, useState } from "react"
 import { Box, CircularProgress, Grid, MenuItem, Paper } from "@mui/material"
 import { useFormik } from "formik"
 import { SignupForm } from "../../types/server/user/signup"
-import { default_content_list_style, default_content_wrapper_style } from "../../style/default_content_style"
+import { default_content_list_style } from "../../style/default_content_style"
 import { useParams } from "react-router-dom"
 import { useUser } from "../../hooks/useUser"
-import { FormHeader } from "../../components/FormHeader"
 import { Form } from "../../components/Form"
 import { TextField } from "../../components/TextField"
 import { Button } from "../../components/Button"
@@ -20,7 +19,8 @@ import { useCepMask, useCpfMask, usePhoneMask } from "burgos-masks"
 import MaskedInput from "../../components/MaskedInput"
 import { unmask } from "../../tools/unmask"
 import { CepEvents } from "../../components/events/CepEvents"
-import { Avatar, ExtFile } from "@files-ui/react"
+import { Avatar } from "@files-ui/react"
+import { FormButtons } from "../../components/FormButtons"
 
 interface UserFormProps {}
 
@@ -271,16 +271,7 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
                     </Grid>
                 </Box>
 
-                <Box sx={{ alignSelf: "flex-end", gap: 1, position: "fixed", bottom: "1vw" }}>
-                    {current_user && (
-                        <Button variant="outlined" color="error" onClick={onDelete}>
-                            {deleting ? <CircularProgress size="1.5rem" color="inherit" /> : "deletar"}
-                        </Button>
-                    )}
-                    <Button variant="contained" type="submit">
-                        {loading ? <CircularProgress size="1.5rem" color="inherit" /> : current_user ? "salvar" : "criar"}
-                    </Button>
-                </Box>
+                <FormButtons editing={!!current_user} loading={loading} deleting={deleting} onDelete={onDelete} />
             </Form>
 
             <UsersEvents setLoading={setLoading} />
