@@ -82,7 +82,7 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
                       }
                     : undefined,
             }
-            io.emit(current_user ? "user:update" : "user:signup", data)
+            io.emit(current_user ? "user:update" : "user:signup", data, user.user?.id)
         },
         enableReinitialize: true,
     })
@@ -94,7 +94,7 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
             content: "tem certeza?",
             onConfirm: () => {
                 setDeleting(true)
-                io.emit("user:delete", { id: current_user.id })
+                io.emit("user:delete", { id: current_user.id, user_id: user.user?.id })
             },
         })
     }

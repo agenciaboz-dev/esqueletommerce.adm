@@ -12,6 +12,7 @@ import { Avatar } from "@files-ui/react"
 import { TextField } from "../../components/TextField"
 import { FormButtons } from "../../components/FormButtons"
 import { CategoryEvents } from "../../components/events/CategoryEvents"
+import { useUser } from "../../hooks/useUser"
 
 interface CategoryFormProps {}
 
@@ -23,17 +24,22 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({}) => {
     const container_ref = useRef<HTMLDivElement>(null)
 
     const { confirm } = useConfirmDialog()
+    const { user } = useUser()
 
     const [loading, setLoading] = useState(false)
     const [deleting, setDeleting] = useState(false)
     const [image, setImage] = useState<File>()
 
     const formik = useFormik<CategoryFormType>({
-        initialValues: current_category || {
-            name: "",
-        },
+        initialValues: current_category
+            ? { ...current_category, user_id: user?.id || 0 }
+            : {
+                  user_id: user?.id || 0,
+                  name: "",
+              },
         onSubmit: (values) => {
             if (loading) return
+            if (!values.user_id) return
             setLoading(true)
             console.log(values)
             const data: CategoryFormType = { ...values, image: image ? { file: image, name: image.name } : undefined }
@@ -49,7 +55,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({}) => {
             content: "tem certeza?",
             onConfirm: () => {
                 setDeleting(true)
-                io.emit("category:delete", { id: current_category.id })
+                io.emit("category:delete", { id: current_category.id, user_id: user?.id })
             },
         })
     }
