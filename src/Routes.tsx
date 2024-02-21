@@ -7,6 +7,7 @@ import { Menu } from "./components/Menu/Menu"
 import { Box } from "@mui/material"
 import { Users } from "./pages/Users/Users"
 import { Categories } from "./pages/Categories/Categories"
+import { Logs } from "./pages/Logs/Logs"
 
 interface RoutesProps {}
 
@@ -20,6 +21,7 @@ export const Routes: React.FC<RoutesProps> = ({}) => {
                 <Route index element={<Dashboard />} />
                 <Route path="/users/*" element={<Users />} />
                 <Route path="/categories/*" element={<Categories />} />
+                <Route path="/logs" element={<Logs />} />
             </ReactRoutes>
         </Box>
     ) : (

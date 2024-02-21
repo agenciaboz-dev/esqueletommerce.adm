@@ -18,7 +18,7 @@ export const UserList: React.FC<UserListProps> = ({}) => {
 
     return (
         <Paper elevation={0} sx={default_content_list_style}>
-            <SearchAndAdd original_list={user.list} setList={setUserList} add_path="/users/new" />
+            <SearchAndAdd original_list={user.list} setList={setUserList} add_path="/users/new" search_key={"name"} />
             {userList
                 .filter((user) => user.admin)
                 .sort((a, b) => a.id - b.id)

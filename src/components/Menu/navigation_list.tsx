@@ -1,6 +1,7 @@
 import { NavigationItem } from "../../types/NavigationItem"
 import { TbHome, TbLayoutGridAdd, TbListDetails, TbScript, TbTools, TbUsers } from "react-icons/tb"
 import { MdOutlineAddBusiness } from "react-icons/md"
+import { List } from "@mui/icons-material"
 
 export const navigation_list: NavigationItem[] = [
     {
@@ -37,5 +38,10 @@ export const navigation_list: NavigationItem[] = [
         path: "/tools",
         label: "Ferramentas",
         icon: TbTools,
+    },
+    {
+        path: "/logs",
+        label: "Logs",
+        icon: List,
     },
 ]
