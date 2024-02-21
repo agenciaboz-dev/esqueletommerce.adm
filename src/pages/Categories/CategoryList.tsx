@@ -18,7 +18,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({}) => {
 
     return (
         <Paper elevation={0} sx={default_content_list_style}>
-            <SearchAndAdd original_list={category.list} setList={setCategoryList} add_path="/categories/new" />
+            <SearchAndAdd original_list={category.list} setList={setCategoryList} add_path="/categories/new" search_key="name" />
             {categoryList
                 .sort((a, b) => a.id - b.id)
                 .map((category) => (
