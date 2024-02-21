@@ -30,5 +30,13 @@ export const LogProvider: React.FC<LogProviderProps> = ({ children }) => {
         }
     }, [list])
 
+    useEffect(() => {
+        io.on("log:list", (list) => setList(list))
+
+        return () => {
+            io.off("log:list")
+        }
+    }, [])
+
     return <LogContext.Provider value={{ list: list, setList: setList }}>{children}</LogContext.Provider>
 }
