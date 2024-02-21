@@ -56,8 +56,6 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     }, [list, user])
 
     useEffect(() => {
-        io.emit("user:list")
-
         io.on("user:list", (users: User[]) => {
             setList(users)
         })

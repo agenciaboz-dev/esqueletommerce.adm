@@ -25,9 +25,8 @@ export declare class User {
     init(): Promise<void>;
     static update(data: Partial<UserPrisma> & {
         id: number;
-        user_id?: number;
-    }, socket: Socket): Promise<void>;
-    static signup(socket: Socket, data: SignupForm): Promise<void>;
+    }, socket: Socket, user_id?: number): Promise<void>;
+    static signup(socket: Socket, data: SignupForm, user_id?: number): Promise<void>;
     static list(socket: Socket): Promise<void>;
     static login(socket: Socket, data: LoginForm): Promise<void>;
     static delete(socket: Socket, id: number, user_id: number): Promise<void>;

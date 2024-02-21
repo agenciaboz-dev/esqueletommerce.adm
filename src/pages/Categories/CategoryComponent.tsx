@@ -27,7 +27,7 @@ export const CategoryComponent: React.FC<CategoryComponentProps> = ({ category }
                 <Avatar src={category.image || ""} sx={{ width: 50, height: 50 }}>
                     <BrokenImage sx={{ width: 35, height: "auto" }} />
                 </Avatar>
-                <Box sx={{ color: "text.secondary" }}>{category.name}</Box>
+                <Box>{category.name}</Box>
             </Box>
             <Button variant="contained" sx={button_style} disabled={active}>
                 Acessar

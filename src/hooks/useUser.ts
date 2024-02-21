@@ -1,12 +1,21 @@
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import UserContext from "../contexts/userContext"
+import { useIo } from "./useIo"
 
 export const useUser = () => {
-    const userContext = useContext(UserContext)
+    const io = useIo()
+    const user = useContext(UserContext)
 
     const logout = () => {
-        userContext.setUser(null)
+        user.setUser(null)
     }
 
-    return { ...userContext, logout }
+    useEffect(() => {
+        if (user.list.length == 0) {
+            console.log("pegando lista de usuários")
+            io.emit("user:list")
+        }
+    }, [])
+
+    return { ...user, logout }
 }

@@ -10,6 +10,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers"
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
 import { CategoryProvider } from "../contexts/categoryContext"
 import { LogProvider } from "../contexts/logsContext"
+import { SupplierProvider } from "../contexts/supplierContext"
 
 interface ProvidersProps {
     children?: React.ReactNode
@@ -27,7 +28,9 @@ export const Providers: React.FC<ProvidersProps> = ({ children }) => {
                             <IoProvider>
                                 <UserProvider>
                                     <CategoryProvider>
-                                        <LogProvider>{children}</LogProvider>
+                                        <LogProvider>
+                                            <SupplierProvider>{children}</SupplierProvider>
+                                        </LogProvider>
                                     </CategoryProvider>
                                 </UserProvider>
                             </IoProvider>
