@@ -1,15 +1,21 @@
 import React, { useState } from "react"
-import { Box, MenuItem } from "@mui/material"
+import { Box, MenuItem, SvgIconTypeMap } from "@mui/material"
 import { NavigationItem } from "../../types/NavigationItem"
 import { KeyboardArrowDown } from "@mui/icons-material"
 import { useLocation, useNavigate } from "react-router-dom"
+import { IconType } from "react-icons"
+import { OverridableComponent } from "@mui/material/OverridableComponent"
 
 interface NavigationButtonProps {
     menu: NavigationItem
+    Icon:
+        | IconType
+        | (OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
+              muiName: string
+          })
 }
 
-export const NavigationButton: React.FC<NavigationButtonProps> = ({ menu }) => {
-    const Icon = () => menu.icon
+export const NavigationButton: React.FC<NavigationButtonProps> = ({ menu, Icon }) => {
     const navigate = useNavigate()
     const location = useLocation()
     const active = location.pathname.split("/")[1] == menu.path.split("/")[1]
@@ -28,11 +34,9 @@ export const NavigationButton: React.FC<NavigationButtonProps> = ({ menu }) => {
             }}
             onClick={() => navigate(menu.path)}
         >
-            <Icon />
+            <Icon style={{ width: 25, height: 25 }} />
             {menu.label}
-            {menu.submenus && (
-                <KeyboardArrowDown sx={{ marginLeft: "auto", rotate: collapse ? "-180deg" : "", transition: "0.3s" }} />
-            )}
+            {menu.submenus && <KeyboardArrowDown sx={{ marginLeft: "auto", rotate: collapse ? "-180deg" : "", transition: "0.3s" }} />}
         </MenuItem>
     )
 }
