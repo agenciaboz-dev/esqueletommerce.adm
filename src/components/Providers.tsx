@@ -31,11 +31,11 @@ export const Providers: React.FC<ProvidersProps> = ({ children }) => {
                                 <IoProvider>
                                     <UserProvider>
                                         <CategoryProvider>
-                                            <ProductProvider>
-                                                <LogProvider>
-                                                    <SupplierProvider>{children}</SupplierProvider>
-                                                </LogProvider>
-                                            </ProductProvider>
+                                            <SupplierProvider>
+                                                <ProductProvider>
+                                                    <LogProvider>{children}</LogProvider>
+                                                </ProductProvider>
+                                            </SupplierProvider>
                                         </CategoryProvider>
                                     </UserProvider>
                                 </IoProvider>
