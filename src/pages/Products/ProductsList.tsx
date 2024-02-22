@@ -1,12 +1,13 @@
-import { Box } from "@mui/material"
+import { Paper } from "@mui/material"
 import React from "react"
 import { useState } from "react"
-import { Table, ScrollArea, UnstyledButton, Group, Text, Center, TextInput, rem, keys } from "@mantine/core"
-import { IconSelector, IconChevronDown, IconChevronUp, IconSearch } from "@tabler/icons-react"
+import { Table, UnstyledButton, Group, Text, Center, rem } from "@mantine/core"
+import { IconSelector, IconChevronDown, IconChevronUp } from "@tabler/icons-react"
 import classes from "../../style/table.module.css"
 import { Product } from "../../types/server/product/product"
 import { useProduct } from "../../hooks/useProduct"
-import { SearchField } from "../../components/ListHeader/SearchField"
+import { default_content_list_style } from "../../style/default_content_style"
+import { SearchAndAdd } from "../../components/SearchAndAdd"
 
 interface ProductListProps {}
 
@@ -193,14 +194,8 @@ export const ProductList: React.FC<ProductListProps> = ({}) => {
     ))
 
     return (
-        <ScrollArea>
-            <TextInput
-                placeholder="Busque por um produto"
-                mb="md"
-                leftSection={<IconSearch style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
-                value={search}
-                onChange={handleSearchChange}
-            />
+        <Paper sx={default_content_list_style}>
+            <SearchAndAdd original_list={data} setList={setSortedData} search_key={"name"} add_path="/products/new" />
             <Table horizontalSpacing="md" verticalSpacing="xs" miw={700} layout="fixed">
                 <Table.Tbody>
                     <Table.Tr>
@@ -213,11 +208,7 @@ export const ProductList: React.FC<ProductListProps> = ({}) => {
                         <Th sorted={sortBy === "brand"} reversed={reverseSortDirection} onSort={() => setSorting("brand")}>
                             Marca
                         </Th>
-                        <Th
-                            sorted={sortBy === "supplier"}
-                            reversed={reverseSortDirection}
-                            onSort={() => setSorting("supplier")}
-                        >
+                        <Th sorted={sortBy === "supplier"} reversed={reverseSortDirection} onSort={() => setSorting("supplier")}>
                             Fornecedor
                         </Th>
                         <Th sorted={sortBy === "cost"} reversed={reverseSortDirection} onSort={() => setSorting("cost")}>
@@ -244,6 +235,6 @@ export const ProductList: React.FC<ProductListProps> = ({}) => {
                     )}
                 </Table.Tbody>
             </Table>
-        </ScrollArea>
+        </Paper>
     )
 }
