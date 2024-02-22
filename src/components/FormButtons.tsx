@@ -11,7 +11,7 @@ interface FormButtonsProps {
 
 export const FormButtons: React.FC<FormButtonsProps> = ({ editing, loading, deleting, onDelete }) => {
     return (
-        <Box sx={{ alignSelf: "flex-end", gap: 1, position: "fixed", bottom: "1vw" }}>
+        <Box sx={{ alignSelf: "flex-end", gap: 1, position: "fixed" }}>
             {editing && (
                 <Button variant="outlined" color="error" onClick={onDelete}>
                     {deleting ? <CircularProgress size="1.5rem" color="inherit" /> : "deletar"}
