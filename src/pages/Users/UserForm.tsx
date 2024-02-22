@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react"
 import { Box, CircularProgress, Grid, MenuItem, Paper } from "@mui/material"
 import { useFormik } from "formik"
-import { SignupForm } from "../../types/server/user/signup"
+// import { SignupForm } from "../../types/server/user/signup"
 import { default_content_list_style } from "../../style/default_content_style"
 import { useParams } from "react-router-dom"
 import { useUser } from "../../hooks/useUser"
@@ -21,6 +21,7 @@ import { unmask } from "../../tools/unmask"
 import { CepEvents } from "../../components/events/CepEvents"
 import { Avatar } from "@files-ui/react"
 import { FormButtons } from "../../components/FormButtons"
+import { UserForm as UserFormType } from "../../types/server/class/User"
 
 interface UserFormProps {}
 
@@ -42,7 +43,7 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
     const [loadingCep, setLoadingCep] = useState(false)
     const [image, setImage] = useState<File>()
 
-    const formik = useFormik<SignupForm>({
+    const formik = useFormik<UserFormType>({
         initialValues: current_user
             ? { ...current_user }
             : {
@@ -70,7 +71,7 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
             if (loading) return
             setLoading(true)
             console.log(values)
-            const data: SignupForm = {
+            const data: UserFormType = {
                 ...values,
                 cpf: unmask(values.cpf),
                 phone: unmask(values.phone),
@@ -132,7 +133,7 @@ export const UserForm: React.FC<UserFormProps> = ({}) => {
                     <Avatar
                         src={
                             image ||
-                            current_user?.image ||
+                            (typeof current_user?.image == "string" ? current_user?.image : current_user?.image?.name) ||
                             "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"
                         }
                         onChange={(file) => setImage(file)}
