@@ -9,6 +9,7 @@ import { Users } from "./pages/Users/Users"
 import { Categories } from "./pages/Categories/Categories"
 import { Logs } from "./pages/Logs/Logs"
 import { Suppliers } from "./pages/Suppliers/Suppliers"
+import { Products } from "./pages/Products/Products"
 
 interface RoutesProps {}
 
@@ -22,6 +23,7 @@ export const Routes: React.FC<RoutesProps> = ({}) => {
                 <Route index element={<Dashboard />} />
                 <Route path="/users/*" element={<Users />} />
                 <Route path="/categories/*" element={<Categories />} />
+                <Route path="/products/*" element={<Products />} />
                 <Route path="/suppliers/*" element={<Suppliers />} />
                 <Route path="/logs" element={<Logs />} />
             </ReactRoutes>

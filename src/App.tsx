@@ -10,7 +10,6 @@ export const App: React.FC<AppProps> = ({}) => {
     return (
         <Providers>
             <Routes />
-
             <Snackbar />
             <ConfirmDialog />
         </Providers>

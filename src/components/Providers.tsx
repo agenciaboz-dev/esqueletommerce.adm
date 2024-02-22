@@ -11,7 +11,9 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
 import { CategoryProvider } from "../contexts/categoryContext"
 import { LogProvider } from "../contexts/logsContext"
 import { SupplierProvider } from "../contexts/supplierContext"
-
+import "@mantine/core/styles.css"
+import { MantineProvider } from "@mantine/core"
+import { ProductProvider } from "../contexts/productContext"
 interface ProvidersProps {
     children?: React.ReactNode
 }
@@ -22,21 +24,25 @@ export const Providers: React.FC<ProvidersProps> = ({ children }) => {
     return (
         <BrowserRouter>
             <ThemeProvider theme={theme}>
-                <SnackbarProvider>
-                    <ConfirmDialogProvider>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <IoProvider>
-                                <UserProvider>
-                                    <CategoryProvider>
-                                        <LogProvider>
-                                            <SupplierProvider>{children}</SupplierProvider>
-                                        </LogProvider>
-                                    </CategoryProvider>
-                                </UserProvider>
-                            </IoProvider>
-                        </LocalizationProvider>
-                    </ConfirmDialogProvider>
-                </SnackbarProvider>
+                <MantineProvider>
+                    <SnackbarProvider>
+                        <ConfirmDialogProvider>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <IoProvider>
+                                    <UserProvider>
+                                        <CategoryProvider>
+                                            <ProductProvider>
+                                                <LogProvider>
+                                                    <SupplierProvider>{children}</SupplierProvider>
+                                                </LogProvider>
+                                            </ProductProvider>
+                                        </CategoryProvider>
+                                    </UserProvider>
+                                </IoProvider>
+                            </LocalizationProvider>
+                        </ConfirmDialogProvider>
+                    </SnackbarProvider>
+                </MantineProvider>
             </ThemeProvider>
         </BrowserRouter>
     )
