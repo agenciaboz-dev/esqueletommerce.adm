@@ -29,7 +29,7 @@ export const Logs: React.FC<LogsProps> = ({}) => {
             <ListHeader title="Logs" Icon={TbUsers} />
             <Paper elevation={0} sx={{ ...default_content_list_style, boxShadow: 0 }}>
                 <SearchField original_list={logs.list} setList={setList} search_key={"text"} />
-                <Box sx={{ flexDirection: "column", paddingTop: 3, pl: 1, pr: 1, gap: 2 }}>
+                <Box sx={{ flexDirection: "column", paddingTop: 3, pl: 1, pr: 1, gap: 1 }}>
                     {list
                         .sort((a, b) => b.id - a.id)
                         .map((log) => (
