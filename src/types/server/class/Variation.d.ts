@@ -12,6 +12,7 @@ export declare class VariationOption {
     id: number;
     name: string;
     sku: string | null;
+    cover_url: string | null;
     price: number | null;
     promotion: number | null;
     stock: number | null;

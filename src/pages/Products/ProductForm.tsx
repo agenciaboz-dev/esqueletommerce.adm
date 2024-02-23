@@ -11,6 +11,8 @@ import { ProductForm as ProductFormType } from "../../types/server/class/Product
 import { Form } from "../../components/Form"
 import { ProductDetailsForm } from "./ProductDetailsForm"
 import { ProductGallery } from "./ProductGallery"
+import { ProductVariations } from "./ProductVariations"
+import { ProductMoreDetailsForm } from "./ProductMoreDetailsForm"
 
 interface ProductFormProps {}
 
@@ -67,14 +69,15 @@ export const ProductForm: React.FC<ProductFormProps> = ({}) => {
             <ListHeader title={current_product ? current_product.name : "Novo produto"} Icon={TbListDetails} />
             <Tabs value={currentTab} onChange={(_, value) => setCurrentTab(value)} variant="fullWidth">
                 <Tab value={1} label="Características" />
-                <Tab value={2} label="Galeria" />
+                <Tab value={2} label="Detalhes" />
                 <Tab value={3} label="Variações" />
                 <Tab value={4} label="teste" />
             </Tabs>
 
             <Form onSubmit={formik.handleSubmit} sx={{ flexDirection: "column" }}>
                 {currentTab === 1 && <ProductDetailsForm formik={formik} current_product={current_product} />}
-                {currentTab === 2 && <ProductGallery formik={formik} current_product={current_product} />}
+                {currentTab === 2 && <ProductMoreDetailsForm formik={formik} current_product={current_product} />}
+                {currentTab === 3 && <ProductVariations formik={formik} current_product={current_product} />}
             </Form>
         </Box>
     )

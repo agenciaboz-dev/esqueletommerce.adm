@@ -36,11 +36,11 @@ export const ProductGallery: React.FC<ProductGalleryProps> = ({ formik, current_
     }, [files])
 
     return (
-        <Box sx={{ gap: 2 }}>
+        <Box sx={{ gap: 2, flexDirection: "column", alignItems: "center" }}>
             <Avatar
                 src={(formik.values.cover_file?.file as File) || formik.values.cover_url}
                 onChange={(file) => setCoverFile(file)}
-                style={{ width: "15vw", height: "15vw", flexShrink: 0 }}
+                style={{ width: "12vw", height: "12vw", flexShrink: 0 }}
                 emptyLabel="enviar imagem de capa"
                 changeLabel="trocar imagem de cape"
             />
@@ -51,7 +51,7 @@ export const ProductGallery: React.FC<ProductGalleryProps> = ({ formik, current_
                 maxFileSize={200 * 1024 * 1024}
                 //cleanFiles
                 footerConfig={{ customMessage: "apenas imagens e vídeos" }}
-                style={{ flexDirection: "column", justifyContent: "flex-start" }}
+                style={{ flexDirection: "column", justifyContent: "flex-start", minHeight: "20vw", maxHeight: "25vw", overflowY: "auto" }}
             >
                 {!files.length && !current_product?.gallery.length && <Box>arraste os arquivos aqui ou clique</Box>}
 
