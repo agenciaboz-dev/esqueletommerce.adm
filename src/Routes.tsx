@@ -19,7 +19,15 @@ export const Routes: React.FC<RoutesProps> = ({}) => {
     const { user } = useUser()
 
     return user ? (
-        <Box sx={{ height: 1 }}>
+        <Box
+            sx={{
+                height: 1,
+                "*::selection": {
+                    color: "white",
+                    bgcolor: "primary.main",
+                },
+            }}
+        >
             <Menu />
             <ReactRoutes>
                 <Route index element={<Dashboard />} />

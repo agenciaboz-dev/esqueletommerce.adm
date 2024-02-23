@@ -57,12 +57,12 @@ img {
     object-fit: contain;
 }
 
+.files-ui-dropzone-children-container {
+    justify-content: flex-start!important;
+}
+
 ::-webkit-scrollbar {
     width: 10px;
     height: 10px;
   }
 
-::selection {
-    color: white;
-    background: #00AFEF
-}
