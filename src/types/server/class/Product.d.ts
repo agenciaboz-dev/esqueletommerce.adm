@@ -6,17 +6,20 @@ import { Socket } from "socket.io";
 import { Dimensions } from "./Dimensions";
 import { Image } from "./Image";
 import { Variation } from "./Variation";
-import { WithoutFunctions } from "./methodizer";
+import { ImageUpload, WithoutFunctions } from "./methodizer";
 export type ProductPrisma = Prisma.ProductGetPayload<{
     include: typeof include;
 }>;
-export type ProductForm = Omit<WithoutFunctions<Product>, "id" | "active" | "rating" | "ratings" | "sold" | "dimensions_id" | "supplier" | "categories"> & {
+export type ProductForm = Omit<WithoutFunctions<Product>, "id" | "active" | "rating" | "ratings" | "sold" | "dimensions_id" | "supplier" | "categories" | "cover_url" | "gallery"> & {
     id?: number;
     active?: boolean;
     rating?: number;
     ratings?: number;
     sold?: number;
     dimensions_id?: number;
+    cover_url?: string;
+    cover_file?: ImageUpload;
+    gallery: ImageUpload[] | Image[];
     categories: number[];
 };
 export declare class Product {
@@ -35,6 +38,7 @@ export declare class Product {
     rating: number;
     ratings: number;
     sold: number;
+    cover_url: string;
     categories: Category[];
     supplier_id: number;
     supplier: Supplier;

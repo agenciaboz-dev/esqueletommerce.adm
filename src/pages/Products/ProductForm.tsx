@@ -10,6 +10,7 @@ import { useFormik } from "formik"
 import { ProductForm as ProductFormType } from "../../types/server/class/Product"
 import { Form } from "../../components/Form"
 import { ProductDetailsForm } from "./ProductDetailsForm"
+import { ProductGallery } from "./ProductGallery"
 
 interface ProductFormProps {}
 
@@ -52,6 +53,8 @@ export const ProductForm: React.FC<ProductFormProps> = ({}) => {
                       option_id: null,
                       product_id: null,
                   },
+
+                  cover_file: undefined,
               },
         onSubmit: (values) => {
             console.log(values)
@@ -71,6 +74,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({}) => {
 
             <Form onSubmit={formik.handleSubmit} sx={{ flexDirection: "column" }}>
                 {currentTab === 1 && <ProductDetailsForm formik={formik} current_product={current_product} />}
+                {currentTab === 2 && <ProductGallery formik={formik} current_product={current_product} />}
             </Form>
         </Box>
     )
