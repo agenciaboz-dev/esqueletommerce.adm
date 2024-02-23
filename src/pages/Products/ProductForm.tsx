@@ -22,34 +22,37 @@ export const ProductForm: React.FC<ProductFormProps> = ({}) => {
     const [currentTab, setCurrentTab] = useState(1)
 
     const formik = useFormik<ProductFormType>({
-        initialValues: current_product || {
-            name: "",
-            sku: "",
-            description: "",
-            brand: "",
-            technical: "",
+        initialValues: current_product
+            ? { ...current_product, categories: current_product.categories.map((category) => category.id) }
+            : {
+                  name: "",
+                  sku: "",
+                  description: "",
+                  brand: "",
+                  technical: "",
 
-            stock: 0,
-            promotion: 0,
-            price: 0,
-            cost: 0,
-            profit: 0,
-            supplier_id: 0,
+                  stock: 0,
+                  promotion: 0,
+                  price: 0,
+                  cost: 0,
+                  profit: 0,
 
-            gallery: [],
-            categories: [],
-            variations: [],
+                  supplier_id: 0,
 
-            dimensions: {
-                height: 0,
-                id: 0,
-                length: 0,
-                weight: 0,
-                width: 0,
-                option_id: null,
-                product_id: null,
-            },
-        },
+                  gallery: [],
+                  categories: [],
+                  variations: [],
+
+                  dimensions: {
+                      height: 0,
+                      id: 0,
+                      length: 0,
+                      weight: 0,
+                      width: 0,
+                      option_id: null,
+                      product_id: null,
+                  },
+              },
         onSubmit: (values) => {
             console.log(values)
         },

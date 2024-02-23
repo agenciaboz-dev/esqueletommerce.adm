@@ -10,13 +10,14 @@ import { WithoutFunctions } from "./methodizer";
 export type ProductPrisma = Prisma.ProductGetPayload<{
     include: typeof include;
 }>;
-export type ProductForm = Omit<WithoutFunctions<Product>, "id" | "active" | "rating" | "ratings" | "sold" | "dimensions_id" | "supplier"> & {
+export type ProductForm = Omit<WithoutFunctions<Product>, "id" | "active" | "rating" | "ratings" | "sold" | "dimensions_id" | "supplier" | "categories"> & {
     id?: number;
     active?: boolean;
     rating?: number;
     ratings?: number;
     sold?: number;
     dimensions_id?: number;
+    categories: number[];
 };
 export declare class Product {
     id: number;
